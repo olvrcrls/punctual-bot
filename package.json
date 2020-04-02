@@ -15,6 +15,7 @@
     "discord.js": "^12.1.1",
     "dotenv": "^8.2.0",
     "google-spreadsheet": "^3.0.10",
+    "log-symbols": "^3.0.0",
     "nodemon": "^2.0.2"
   },
   "devDependencies": {
