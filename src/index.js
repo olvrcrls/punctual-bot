@@ -1,6 +1,5 @@
 require('dotenv').config();
 const { readdirSync } = require('fs');
-const { sep } = require('path');
 const { success, error, warning } = require('log-symbols');
 const Discord = require('discord.js');
 
