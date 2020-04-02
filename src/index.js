@@ -38,10 +38,9 @@ const loadCommands = (dir = './commands') => {
   });
 };
 
-loadCommands();
-
 // Event when the bot is ready and online.
 client.on('ready', () => {
+  loadCommands();
   console.log(`${client.user.username} has started functioning.`);
   client.user.setActivity(`Serving ${client.guilds.cache.size} guild servers. Use ${process.env.PREFIX}help`);
 });
