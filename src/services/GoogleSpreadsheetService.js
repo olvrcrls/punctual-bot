@@ -1,8 +1,9 @@
+require('dotenv').config();
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const creds = require('../credentials.json');
+// const creds = require('../credentials.json');
 
 
-async function getAttendances(spreadSheetId) {
+export default async function loadSpreadsheet(spreadSheetId) {
   const doc = new GoogleSpreadsheet(spreadSheetId);
 
   // Method 1 using service account creds
@@ -12,13 +13,11 @@ async function getAttendances(spreadSheetId) {
   // })
 
   // Method 2 using the credentials.json
-  await doc.useServiceAccountAuth(creds);
+  // await doc.useServiceAccountAuth(creds);
+
   // Method 3 using the GOOGLE API KEY
-  // doc.useApiKey(process.env.GOOGLE_API_KEY)
+  doc.useApiKey(process.env.GOOGLE_API_KEY);
 
 
   await doc.loadInfo(); // loads the document properties and worksheets.
-  console.log({ doc });
 }
-
-getAttendances('1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms');
