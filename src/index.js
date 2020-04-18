@@ -1,7 +1,13 @@
 require('dotenv').config();
+const Discord = require('discord.js');
 const { readdirSync } = require('fs');
 const { success, error, warning } = require('log-symbols');
-const Discord = require('discord.js');
+const errorlog = require('errorlog');
+
+errorlog.defaultLog = process.stdout;
+errorlog.defaultLevel = errorlog.DEBUG;
+global.log = errorlog();
+
 
 // Creating client object.
 const client = new Discord.Client();
