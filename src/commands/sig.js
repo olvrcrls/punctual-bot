@@ -15,6 +15,6 @@ module.exports.run = async (client, msg, args) => {
     description: 'Load out the signature template of a character',
     usage: 'Load out the signature template of a character',
     category: 'NovaRO',
-    aliases: ['pong'],
+    aliases: ['signature'],
   };
   
