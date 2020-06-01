@@ -15,31 +15,36 @@ const client = new Discord.Client();
 // creating commands and aliases collection
 ['commands', 'aliases'].forEach((x) => client[x] = new Discord.Collection());
 
+
+/**
+ * Load up all the command libraries.
+ * @param {string} dir 
+ */
 const loadCommands = (dir = './commands') => {
     const commands = readdirSync(`./src/${dir}`).filter(file => file.endsWith('.js'));
 
     // eslint-disable-next-line no-restricted-syntax
     for (const file of commands) {
-      const pullFile = require(`${dir}/${file}`);
-      if (pullFile.help && typeof (pullFile.help.name) === 'string' && typeof (pullFile.help.category) === 'string') {
-        if (client.commands.has(pullFile.help.name)) {
-          console.warn(`${warning} The command is redundant with the name of ${pullFile}`);
+      const command = require(`${dir}/${file}`);
+      if (command.help && typeof (command.help.name) === 'string' && typeof (command.help.category) === 'string') {
+        if (client.commands.has(command.help.name)) {
+          console.warn(`${warning} The command is redundant with the name of ${command}`);
           return;
         }
 
-        client.commands.set(pullFile.help.name, pullFile);
+        client.commands.set(command.help.name, command);
 
-        console.log(`${success} loaded command: ${pullFile.help.name}`);
+        console.log(`${success} loaded command: ${command.help.name}`);
       } else {
-        console.log(`${error} loading the command commits an error in ${dir}${dirs}.\n you have a missing help.name or help.name is not a string. or you have a missing help.category or help.category is not a string`);
+        console.log(`${error} loading the command commits an error in ${dir}${commands}.\n you have a missing help.name or help.name is not a string. or you have a missing help.category or help.category is not a string`);
         continue;
       }
 
-      if (pullFile.help.aliases && typeof (pullFile.help.aliases) === 'object') {
-        pullFile.help.aliases.forEach((alias) => {
+      if (command.help.aliases && typeof (command.help.aliases) === 'array') {
+        command.help.aliases.forEach((alias) => {
           if (client.aliases.get(alias)) return console.warn(`${warning} The command is redundant with the name of ${alias}`);
 
-          client.aliases.set(alias, pullFile.help.name);
+          client.aliases.set(alias, command.help.name);
         });
       }
     }
@@ -63,8 +68,6 @@ client.on('message', async (msg) => {
     console.log(`${success} The argument passed from the command: ${cmd} is ${args}`);
   }
 
-  let command;
-
   if (!msg.content.startsWith(prefix)) return;
 
   if (cmd.length === 0) return;
@@ -73,8 +76,9 @@ client.on('message', async (msg) => {
 
   if (!msg.member) msg.member = await msg.guild.member(msg.author);
 
-  if (client.commands.has(cmd)) command = client.commands.get(cmd);
-  else if (client.aliases.has(cmd)) command = client.commands.get(client.aliases.get(cmd));
+  let command = client.commands.get(cmd) || client.commands.find((c) => c.help.aliases && c.help.aliases.includes(cmd));
+
+  // else if (client.aliases.has(cmd)) command = client.commands.get(client.aliases.get(cmd));
 
   if (command && !bot) await command.run(client, msg, args);
 });
