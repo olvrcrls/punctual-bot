@@ -4,7 +4,7 @@
   "description": "Discord Bot for Guild Raids / Events",
   "main": "./src/index.js",
   "scripts": {
-    "lint": "npx eslint \"**/*.js\"",
+    "lint": "npx eslint --fix .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/index.js"
   },
