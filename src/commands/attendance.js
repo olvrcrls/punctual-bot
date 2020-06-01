@@ -8,6 +8,6 @@ module.exports.help = {
   name: 'attendance',
   description: '',
   usage: '',
-  category: '',
+  category: 'Attendance',
   aliases: [''],
 };

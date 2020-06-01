@@ -7,5 +7,5 @@ module.exports.help = {
   description: 'Test to see if the bot is responding to the user',
   usage: 'Test to see if the bot is responding to the user',
   category: 'Test',
-  aliases: [''],
+  aliases: ['pong'],
 };
