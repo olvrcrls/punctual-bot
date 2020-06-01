@@ -1,11 +1,11 @@
-module.exports.run = async (client, msg, args) => {
-  await msg.channel.send(`pong and the argrument is ${args}`);
+module.exports.run = async (client, msg) => {
+  await msg.channel.send('Pong!');
 };
 
 module.exports.help = {
   name: 'ping',
-  description: '',
-  usage: '',
-  category: '',
+  description: 'Test to see if the bot is responding to the user',
+  usage: 'Test to see if the bot is responding to the user',
+  category: 'Test',
   aliases: [''],
 };
