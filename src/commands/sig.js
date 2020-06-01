@@ -2,11 +2,12 @@ let randInt = require('../helpers/randInt');
 
 module.exports.run = async (client, msg, args) => {
     if (args.length) {
+        let comment = require('../helpers/randString')();
         let name = encodeURI(args.join(' '));
         let background = randInt(10);
         let stance = randInt(25);
         let url = `https://www.novaragnarok.com/ROChargenPHP/newsig/${name}/${background}/${stance}`;
-        await msg.channel.send(url);
+        await msg.channel.send(`${url}\n\n**${comment}**`);
     } else {
         await msg.channel.send('What is this?! **Please provide** a character name.');
     }

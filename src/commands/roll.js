@@ -11,7 +11,7 @@ module.exports.run = async (client, msg, args) => {
 module.exports.help = {
   name: 'roll',
   description: 'For death rolls in discord',
-  usage: 'For death rolls in discord',
+  usage: 'For gambling',
   category: 'Misc',
   aliases: ['dr', 'deathroll'],
 }

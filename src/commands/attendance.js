@@ -6,8 +6,8 @@ module.exports.run = async (client, msg, args) => {
 
 module.exports.help = {
   name: 'attendance',
-  description: '',
-  usage: '',
+  description: 'Sets the member of this server to have attendance specifically here.',
+  usage: 'Set attendance.',
   category: 'Attendance',
   aliases: [''],
 };

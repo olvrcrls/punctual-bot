@@ -19,16 +19,16 @@ exports.get = function (serverId) {
   }).catch((error) => {
     log({ error });
   });
-}
+};
 
 exports.store = function () {
   ApiService.post();
-}
+};
 
 exports.update = function () {
   ApiService.patch();
-}
+};
 
 exports.destroy = function () {
   ApiService.delete();
-}
+};
