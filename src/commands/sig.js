@@ -1,8 +1,10 @@
+let randInt = require('../helpers/randInt');
+
 module.exports.run = async (client, msg, args) => {
     if (args.length) {
-        let name = args[0];
-        let background = Math.floor(Math.random() * Math.max(10));
-        let stance = Math.floor(Math.random() * Math.max(25));
+        let name = encodeURI(args.join(' '));
+        let background = randInt(10);
+        let stance = randInt(25);
         let url = `https://www.novaragnarok.com/ROChargenPHP/newsig/${name}/${background}/${stance}`;
         await msg.channel.send(url);
     } else {
