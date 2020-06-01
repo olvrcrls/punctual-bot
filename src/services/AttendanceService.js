@@ -1,13 +1,14 @@
-import apiService from './ApiService';
-import GoogleSpreadsheetService from './GoogleSpreadsheetService';
+const GoogleSpreadsheetService = require('./GoogleSpreadsheetService');
+
+const ApiService = require('./ApiService');
 
 /**
  * This will get the attendances basing on the
  * serverId that is provided by the request.
  * @param {string} serverId
  */
-export function get(serverId) {
-  return apiService.get('/attendances', {
+exports.get = function (serverId) {
+  return ApiService.get('/attendances', {
     params: { serverId },
   }).then((response) => {
     const { data } = response;
@@ -20,14 +21,14 @@ export function get(serverId) {
   });
 }
 
-export function store() {
-  apiService.post();
+exports.store = function () {
+  ApiService.post();
 }
 
-export function update() {
-  apiService.patch();
+exports.update = function () {
+  ApiService.patch();
 }
 
-export function destroy() {
-  apiService.delete();
+exports.destroy = function () {
+  ApiService.delete();
 }

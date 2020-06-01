@@ -23,11 +23,14 @@ const loadCommands = (dir = './commands') => {
     for (const file of commands) {
       const pullFile = require(`${dir}/${file}`);
       if (pullFile.help && typeof (pullFile.help.name) === 'string' && typeof (pullFile.help.category) === 'string') {
-        if (client.commands.get(pullFile.help.name)) return console.warn(`${warning} The command is redundant with the name of ${pullFile.help.name}`);
+        
+        if (client.commands.has(pullFile.help.name)) {
+          return console.warn(`${warning} The command is redundant with the name of ${pullFile.help.name}`);
+        }
 
         client.commands.set(pullFile.help.name, pullFile);
 
-        console.log(`${success} loaded command ${pullFile.help.name}`);
+        console.log(`${success} loaded command: ${pullFile.help.name}`);
       } else {
         console.log(`${error} loading the command commits an error in ${dir}${dirs}.\n you have a missing help.name or help.name is not a string. or you have a missing help.category or help.category is not a string`);
         continue;
@@ -53,9 +56,12 @@ client.on('ready', () => {
 
 client.on('message', async (msg) => {
   const prefix = process.env.PREFIX;
-  const args = msg.content.slice(prefix.length).trim().split(/ +g/);
+  const args = msg.content.slice(prefix.length).trim().split(/ +/);
   const cmd = args.shift().toLowerCase();
-
+  if (prefix) {
+    console.log(`${success} The argument passed from the command: ${cmd} is ${args}`);
+  }
+  
   let command;
 
   if (!msg.content.startsWith(prefix)) return;

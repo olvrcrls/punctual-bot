@@ -1,9 +1,9 @@
 require('dotenv').config();
+
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 // const creds = require('../credentials.json');
 
-
-export default async function loadSpreadsheet(spreadSheetId) {
+exports.loadSpreadsheet = async function (spreadSheetId) {
   const doc = new GoogleSpreadsheet(spreadSheetId);
 
   // Method 1 using service account creds
@@ -20,4 +20,4 @@ export default async function loadSpreadsheet(spreadSheetId) {
 
 
   await doc.loadInfo(); // loads the document properties and worksheets.
-}
+};

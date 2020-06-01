@@ -10,4 +10,4 @@ const apiService = axios.create({
   timeout: 10000, // 10 seconds of timeout
 });
 
-export default apiService;
+module.exports = apiService;
