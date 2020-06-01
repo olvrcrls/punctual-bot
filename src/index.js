@@ -16,16 +16,15 @@ const client = new Discord.Client();
 ['commands', 'aliases'].forEach((x) => client[x] = new Discord.Collection());
 
 const loadCommands = (dir = './commands') => {
-  readdirSync(`./src/${dir}`).forEach((dirs) => {
-    const commands = readdirSync(`./src/${dir}`).filter((files) => files.endsWith('.js'));
+    const commands = readdirSync(`./src/${dir}`).filter(file => file.endsWith('.js'));
 
     // eslint-disable-next-line no-restricted-syntax
     for (const file of commands) {
       const pullFile = require(`${dir}/${file}`);
       if (pullFile.help && typeof (pullFile.help.name) === 'string' && typeof (pullFile.help.category) === 'string') {
-        
         if (client.commands.has(pullFile.help.name)) {
-          return console.warn(`${warning} The command is redundant with the name of ${pullFile.help.name}`);
+          console.warn(`${warning} The command is redundant with the name of ${pullFile}`);
+          return;
         }
 
         client.commands.set(pullFile.help.name, pullFile);
@@ -44,11 +43,10 @@ const loadCommands = (dir = './commands') => {
         });
       }
     }
-  });
 };
 
 // Event when the bot is ready and online.
-client.on('ready', () => {
+client.once('ready', () => {
   loadCommands();
   console.log(`${client.user.username} has started functioning.`);
   client.user.setActivity(`Serving ${client.guilds.cache.size} guild servers. Use ${process.env.PREFIX}help`);
@@ -58,10 +56,13 @@ client.on('message', async (msg) => {
   const prefix = process.env.PREFIX;
   const args = msg.content.slice(prefix.length).trim().split(/ +/);
   const cmd = args.shift().toLowerCase();
-  if (prefix) {
+
+  const { bot } = msg.author;
+
+  if (prefix && !bot) {
     console.log(`${success} The argument passed from the command: ${cmd} is ${args}`);
   }
-  
+
   let command;
 
   if (!msg.content.startsWith(prefix)) return;
@@ -75,7 +76,7 @@ client.on('message', async (msg) => {
   if (client.commands.has(cmd)) command = client.commands.get(cmd);
   else if (client.aliases.has(cmd)) command = client.commands.get(client.aliases.get(cmd));
 
-  if (command) command.run(client, msg, args);
+  if (command && !bot) await command.run(client, msg, args);
 });
 
 client.login(process.env.CLIENT_TOKEN).catch(console.error());
