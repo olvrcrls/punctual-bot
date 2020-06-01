@@ -4,7 +4,7 @@
   "description": "Discord Bot for Guild Raids / Events",
   "main": "./src/index.js",
   "scripts": {
-    "lint": "npx eslint -c .eslintrc --ignore-pattern \"*.test.*\" ./**/*.{js} ",
+    "lint": "npx eslint \"**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./src/index.js"
   },
@@ -12,12 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
-    "discord.js": "^12.1.1",
+    "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "errorlog": "^1.4.7",
-    "google-spreadsheet": "^3.0.10",
+    "google-spreadsheet": "^3.0.11",
     "log-symbols": "^3.0.0",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.4"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
